@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './transaction.dart';
+import './widgets/transaction_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,20 +14,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction(
-      date: DateTime.now(),
-      id: 't1',
-      amount: 375000,
-      title: 'New Lappie',
-    ),
-    Transaction(
-      date: DateTime.now(),
-      id: 't2',
-      amount: 2350.56,
-      title: 'Chicken Republic',
-    ),
-  ];
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +24,6 @@ class MyHomePage extends StatelessWidget {
         title: Text('Flutter App'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
@@ -48,15 +35,36 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
           ),
+          Card(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                    controller: titleController,
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amount'),
+                    style: TextStyle(fontSize: 20),
+                    controller: amountController,
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      print(titleController.text);
+                      print(amountController.text);
+                    },
+                    child: Text('Add Transaction'),
+                    textColor: Colors.purple,
+                  ),
+                ],
+              ),
+            ),
+          ),
           Container(
             width: double.infinity,
-            child: Column(
-              children: transactions
-                  .map(
-                    (transaction) => TransactionWidget(transaction),
-                  )
-                  .toList(),
-            ),
+            child: TransactionList(),
           ),
         ],
       ),
