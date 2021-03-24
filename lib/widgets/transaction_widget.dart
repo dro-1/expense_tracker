@@ -16,12 +16,12 @@ class TransactionWidget extends StatelessWidget {
           Container(
             width: 120,
             child: Text(
-              '#${tx.amount}',
+              '#${tx.amount.toStringAsFixed(2)}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.purple,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             margin: EdgeInsets.symmetric(
@@ -30,7 +30,7 @@ class TransactionWidget extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               border: Border.all(
-                color: Colors.purple,
+                color: Theme.of(context).primaryColorLight,
                 width: 2,
               ),
             ),
