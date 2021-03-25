@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './widgets/transaction_list.dart';
 import './widgets/new_transaction.dart';
+import './widgets/chart.dart';
 import './models/transaction.dart';
 
 void main() => runApp(MyApp());
@@ -28,19 +29,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> transactions = [
-    Transaction(
-      date: DateTime.now(),
-      id: 't0',
-      amount: 3750,
-      title: 'New Lappie',
-    ),
-    Transaction(
-      date: DateTime.now(),
-      id: 't1',
-      amount: 2350.56,
-      title: 'Chicken Republic',
-    ),
+    // Transaction(
+    //   date: DateTime.now(),
+    //   id: 't0',
+    //   amount: 3750,
+    //   title: 'New Lappie',
+    // ),
+    // Transaction(
+    //   date: DateTime.now(),
+    //   id: 't1',
+    //   amount: 2350.56,
+    //   title: 'Chicken Republic',
+    // ),
   ];
+
+  List<Transaction> get recentTransactions {
+    return transactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
   void createTransaction({@required String title, @required double amount}) {
     if (title.isEmpty || amount <= 0) {
@@ -90,15 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                child: Text(
-                  'My Chart',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
+            Chart(recentTransactions),
             TransactionList(transactions),
           ],
         ),
