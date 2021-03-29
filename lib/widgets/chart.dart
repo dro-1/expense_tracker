@@ -56,8 +56,7 @@ class Chart extends StatelessWidget {
                     var amountPercentage = totalWeekAmount == 0
                         ? 0.0
                         : (data['amount'] as double) / totalWeekAmount;
-                    return Flexible(
-                      fit: FlexFit.tight,
+                    return Expanded(
                       child: ChartBar(
                           data['amount'], amountPercentage, data['day']),
                     );
